@@ -87,7 +87,7 @@ ax.set(ylabel='Number of people', xlabel='')
 
 # 1.3 BYEDUCATION LEVEL AND MAJOR DISCIPLINE
 ax = figs[2].add_subplot(1,1,1)
-sns.heatmap(pd.crosstab(data.major_discipline, data.education_level, normalize=True, margins = True), cmap=cont_colors, annot=True, ax=ax, fmt=".1%", vmin = 0.01, vmax = 0.25)
+sns.heatmap(pd.crosstab(data.major_discipline, data.education_level, normalize=True, margins = True), cmap=cont_colors, annot=True, annot_kws={"fontsize":6}, ax=ax, fmt=".1%", vmin = 0.01, vmax = 0.25)
 ax.set(xlabel = 'Education level', ylabel = 'Major')
 
 # 1.4 TRAINING HOURS
@@ -108,7 +108,7 @@ ax.set(xlabel = 'Time in Current job as % of Total years of experience', ylabel 
 
 # 1.7 FREQUENCY BY COMPANY TYPE & SIZE
 ax = figs[6].add_subplot(1,1,1)
-sns.heatmap(pd.crosstab(data.company_size, data.company_type, normalize = True, margins=True), cmap=cont_colors, annot = True, fmt=".1%", ax = ax, vmin = 0.01, vmax = 0.25)
+sns.heatmap(pd.crosstab(data.company_size, data.company_type, normalize = True, margins=True), cmap=cont_colors, annot = True, annot_kws={"fontsize":6}, fmt=".1%", ax = ax, vmin = 0.01, vmax = 0.25)
 ax.set(xlabel = 'Company type', ylabel = 'Company size')
 
 # 1.8 LEVEL OF EDUCATION BY CITY DEVELOPMENT INDEX
