@@ -119,12 +119,17 @@ ax.set(xlabel = 'City development index', ylabel = 'Education level')
 # 2.1 PROPORTION OF PEOPLE LOOKING FOR A NEW JOB
 ax = figs[8].add_subplot(1,1,1)
 d1 = pd.DataFrame(data["target"].value_counts())
-ax.pie(d1.target, labels=['Not looking', 'Looking'], autopct='%1.1f%%')
+size = 0.5
+ax.pie(d1.target, labels=['Not looking', 'Looking'], autopct='%1.1f%%', radius=1, wedgeprops=dict(width=size))
 
 # 2.2 EXPERIENCE VS. YEARS IN CURRENT POSITION VS. NEW JOB SEEKER
 ax = figs[9].add_subplot(1,1,1)
-sns.boxplot(x="last_new_job", y="experience", hue='target', data=data, ax =ax)
-ax.set(xlabel="Years at current position", ylabel="Experience")
+g=sns.boxplot(x="last_new_job", y="experience", hue='target', data=data, ax =ax)
+g.legend_.texts[0].set_text('Not looking')
+g.legend_.texts[1].set_text('Looking')
+g.legend_.set_title('New job')
+g.legend(loc='lower right')
+ax.set(xlabel="Years in current position", ylabel="Experience")
 
 # 2.3 PROBABILITY TO LOOK FOR A NEW JOB BY YEARS OF EXPERIENCE
 ax = figs[10].add_subplot(1,1,1)
@@ -162,11 +167,11 @@ with container1:
     with col1:
         st.subheader('By Gender')
         st.write(figs[0])
-        st.write('Comments')
+        st.write('75.3% of the employees are male, 7.4% are female and 1.2% identify as other. For 16% of the employees, the gender is not known.')
     with col2:
         st.subheader('By Relevant experience')
         st.write(figs[1])
-        st.write('Comments')
+        st.write('More than 1000 males and more than 80 females have relevant experience whereas over 200 males and about 40 females do not have relevant experience.')
 
 container2 = st.container()
 col3, col4 = st.columns(2)
@@ -175,11 +180,11 @@ with container2:
     with col3:
         st.subheader('By Education level and Major discipline')
         st.write(figs[2])
-        st.write('Comments')
+        st.write("64% of the employees have Bachelor's degree and 25.6% have Master's degree. Most of these employees come from a STEM background, 56.4% and 23.4%, respectively.")
     with col4:
         st.subheader('By Training hours')
         st.write(figs[3])
-        st.write('Comments')
+        st.write('Distribution of training hours show a wide range up to 340 hours. Most of the employees have done less than 100 hours of training.')
 
 container3 = st.container()
 col5, col6 = st.columns(2)
@@ -188,11 +193,11 @@ with container3:
     with col5:
         st.subheader('By City development index')
         st.write(figs[4])
-        st.write('Comments')
+        st.write('Three cities have a high number of employees and two of them are highly developed cities as shown by city development index.')
     with col6:
         st.subheader('By Relative duration in current job')
         st.write(figs[5])
-        st.write('Comments')
+        st.write('Most of the employees have a low ratio of time in current position over total career. Low ratio is taken as a measure of likeliness of changing jobs.')
 
 container4 = st.container()
 col7, col8 = st.columns(2)
@@ -201,15 +206,15 @@ with container4:
     with col7:
         st.subheader('By Company type and size')
         st.write(figs[6])
-        st.write('Comments')
+        st.write('61.3% of employees work at private companies of different sizes and 6.9% in public sector. Nearly 9% work at startups and 2.9% at NGOs.')
     with col8:
         st.subheader('By Level of education and City development index')
         st.write(figs[7])
-        st.write('Comments')
+        st.write('Most of the employees with a PhD live in more developed cities. Numbers of employees with other education levels are also higher in developed cities as compared to others.')
 
 st.markdown('''---''')
 
-st.header('How likely is somebody to look for a new job?')
+st.header('How likely is it to look for a new job?')
 container5 = st.container()
 col9, col10 = st.columns(2)
 
@@ -217,11 +222,11 @@ with container5:
     with col9:
         st.subheader('Proportion of people looking for a new job')
         st.write(figs[8])
-        st.write('Comments')
+        st.write('25% of the employees are looking for a new job whereas 75% are not looking.')
     with col10:
-        st.subheader('By Experience and Years at current position')
+        st.subheader('By Experience and Years in current position')
         st.write(figs[9])
-        st.write('Comments')
+        st.write('Employees up to 2 years in current position show a similar distribution of experience whether they are looking for a new job or not. After 3 years in current job, more experienced employees tend to look for a new job.')
 
 container6 = st.container()
 col11, col12 = st.columns(2)
@@ -230,7 +235,7 @@ with container6:
     with col11:
         st.subheader('By Years of Experience')
         st.write(figs[10])
-        st.write('Comments')
+        st.write('Probability of looking for a new job is between 0.15 and 0.35. The probability increases slightly with increasing years of experience.')
     with col12:
         st.subheader('ANOVA test: p-values by variables')
         st.write(figs[11])
