@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
+import matplotlib.patches as mpatches
 
 
 #### DATA IMPORT ####
@@ -36,7 +37,7 @@ data_import.company_type = pd.Categorical(data_import.company_type, ordered=True
 
 
 #### GLOBAL STREAMLIT LAYOUT ####
-st.set_page_config(layout="wide")
+st.set_page_config(page_title='IRONHACK PROJECT WEEK 5: HR ANALYTICS', page_icon='favicon.ico', layout="wide")
 st.title('HR ANALYTICS: PEOPLE LOOKING FOR A NEW JOB')
 
 sns.set_theme(palette='pastel', style = 'ticks')
@@ -124,16 +125,15 @@ ax.pie(d1.target, labels=['Not looking', 'Looking'], autopct='%1.1f%%', radius=1
 
 # 2.2 EXPERIENCE VS. YEARS IN CURRENT POSITION VS. NEW JOB SEEKER
 ax = figs[9].add_subplot(1,1,1)
-g=sns.boxplot(x="last_new_job", y="experience", hue='target', data=data, ax =ax)
-g.legend_.texts[0].set_text('Not looking')
-g.legend_.texts[1].set_text('Looking')
-g.legend_.set_title('New job')
-g.legend(loc='lower right')
+sns.boxplot(x="last_new_job", y="experience", hue='target', data=data, ax =ax).legend(title = 'New job', loc = 'lower right', labels = ['Looking', 'Not ooking'])
+notlooking_patch = mpatches.Patch(facecolor='#abc9ea', label='Not looking', edgecolor = '#737373')
+looking_patch = mpatches.Patch(facecolor='#efb792', label='Looking', edgecolor = '#737373')
+ax.legend(title = 'New job', loc = 'lower right', handles = [notlooking_patch, looking_patch], fontsize = 8, title_fontsize=10)
 ax.set(xlabel="Years in current position", ylabel="Experience")
 
 # 2.3 PROBABILITY TO LOOK FOR A NEW JOB BY YEARS OF EXPERIENCE
 ax = figs[10].add_subplot(1,1,1)
-sns.lineplot(data = data, x='experience', y='target', ax=ax, color = cat_colors[1] )
+sns.lineplot(data = data, x='experience', y='target', ax=ax, color = cat_colors[1], ci = None )
 ax.set(xlabel = 'Years of Experience', ylabel = 'Probability', xlim = (0, 21))
 
 
